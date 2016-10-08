@@ -34,8 +34,11 @@ public class LeagueTableTest
 		Match match3 = new Match("WestHam United F.C", "Everton", 2, 2);
 		Match match4 = new Match("WestHam United F.C", "MiddlesBrough", 5, 1);
 		Match match5 = new Match("WestHam United F.C", "Liverpool F.C", 3, 2);
-		Match match6 = new Match("Arsenel F.C", "Chelsea F.C", 6, 5);
+		Match match6 = new Match("Arsenel F.C", "ston Villa F.C", 6, 5);
 		Match match7 = new Match("Manchester United F.C", "Newcastle United F.C", 1, 2);
+		Match match8 = new Match("Chelsea F.C", "MiddlesBrough", 2, 4);
+		Match match9 = new Match("Aston Villa F.C", "Everton", 2, 8);
+		Match match10 = new Match("WestHam United F.C", "Aston Villa F.C", 3, 7);
 
 
 		List<Match> matches = new ArrayList<Match>();
@@ -46,6 +49,9 @@ public class LeagueTableTest
 		matches.add(match5);
 		matches.add(match6);
 		matches.add(match7);
+		matches.add(match8);
+		matches.add(match9);
+		matches.add(match10);
 
 
 		LeagueTable leagueTable = new LeagueTable(matches);
@@ -55,7 +61,7 @@ public class LeagueTableTest
 
 	@Test
 	public void testTotalNumberOfMatchesPlayed() {
-		assertEquals(entries.size(), 8);
+		assertEquals(10, entries.size());
 	}
 
 	/** Sorted based on the Points, Goal Differences, Goals For and the Team Name **/
@@ -65,41 +71,42 @@ public class LeagueTableTest
 	public void testShowHighestPoints() {
 		assertEquals(entries.get(0).getPoints(), 2);
 	}
-	
+
 	@Test
 	public void testMaximumNumberOfMatchesATeamHasWon() {
 		IntSummaryStatistics summaryStatistics = entries.stream()
-		        .mapToInt(LeagueTableEntry::getWon).summaryStatistics();
+				.mapToInt(LeagueTableEntry::getWon).summaryStatistics();
 		assertEquals(2, summaryStatistics.getMax());
 	}
-	
+
 	@Test
 	public void testMaximumNumberOfMatchesATeamHasPlayed() {
 		IntSummaryStatistics summaryStatistics = entries.stream()
-		        .mapToInt(LeagueTableEntry::getPlayed).summaryStatistics();
-		assertEquals(3, summaryStatistics.getMax());
+				.mapToInt(LeagueTableEntry::getPlayed).summaryStatistics();
+		assertEquals(4, summaryStatistics.getMax());
 	}
-	
+
 	@Test
 	public void testMaximumNumberOfMatchesATeamHasLost() {
 		IntSummaryStatistics summaryStatistics = entries.stream()
-		        .mapToInt(LeagueTableEntry::getLost).summaryStatistics();
+				.mapToInt(LeagueTableEntry::getLost).summaryStatistics();
 		assertEquals(2, summaryStatistics.getMax());
 	}
 
 	@Test
 	public void testShowHighestPointsTeamName() {
-		assertThat(entries.get(0).getTeamName(), is("WestHam United F.C"));
-	}
-
-	@Test
-	public void testShowLowestPoints() {
-		assertEquals(entries.get(7).getPoints(), 0);
+		LeagueTableEntry teamWithHihestPoints = entries.stream()
+				.min((p1, p2) -> Integer.compare(p2.getWon(), p1.getWon()))
+				.get();
+		assertThat(teamWithHihestPoints.getTeamName(), is("WestHam United F.C"));
 	}
 
 	@Test
 	public void testShowLowestPointsTeamName() {
-		assertThat(entries.get(7).getTeamName(), is("Liverpool F.C"));
+		LeagueTableEntry teamWithLowestPoints = entries.stream()
+				.min((p1, p2) -> Integer.compare(p1.getWon(), p2.getWon()))
+				.get();
+		assertThat(teamWithLowestPoints.getTeamName(), is("Liverpool F.C"));
 	}
 
 	@Test
@@ -107,22 +114,22 @@ public class LeagueTableTest
 		assertEquals(entries.get(6).getGoalsFor(), entries.get(6).getGoalsAgainst());
 		assertThat(entries.get(6).getTeamName(), is("Everton"));
 	}
-	
+
 	@Test
 	public void testPassingZeroyMatches() {
 		LeagueTable leagueTable = new LeagueTable(new ArrayList<Match>());
 		entries = leagueTable.getTableEntries();
 		assertEquals(entries == null, true);
 	}
-	
+
 	@Test
 	public void testPassingNullMatches() {
 		LeagueTable leagueTable = new LeagueTable(null);
 		entries = leagueTable.getTableEntries();
 		assertEquals(entries == null, true);
 	}
-	
-	
+
+
 	/** Display the league table *
 	@Test
 	public void displayLeagueTable(){
@@ -130,6 +137,6 @@ public class LeagueTableTest
 				+ "  Lost: "+t.getLost()  + "  Played: "+t.getPlayed() + "  Goal differences: "+t.getGoalDifference()  + "  "
 				+ "  Against: "+t.getGoalsAgainst()   + "  GoalFor: "+t.getGoalsFor()  + "  Points: "+t.getPoints()));
 	}
-	**/
+	 **/
 
 }
