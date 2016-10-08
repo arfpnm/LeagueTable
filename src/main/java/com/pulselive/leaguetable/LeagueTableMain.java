@@ -11,7 +11,7 @@ import com.pulselive.leaguetable.service.LeagueTable;
  * Main
  *
  */
-public class AppMain 
+public class LeagueTableMain 
 {
     public static void main( String[] args )
     {

@@ -20,7 +20,7 @@ import com.pulselive.leaguetable.service.LeagueTable;
  * The unit tests are based on the mock data populated in the init() method. 
  * Any data changes will effect the junit results.
  */
-public class AppTest 
+public class LeagueTableTest 
 
 {
 
