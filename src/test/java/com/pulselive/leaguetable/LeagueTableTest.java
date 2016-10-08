@@ -7,6 +7,8 @@ import static org.junit.Assert.assertThat;
 import java.util.ArrayList;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -110,9 +112,11 @@ public class LeagueTableTest
 	}
 
 	@Test
-	public void testShowTeamWhichHasDrawMatch() {
-		assertEquals(entries.get(6).getGoalsFor(), entries.get(6).getGoalsAgainst());
-		assertThat(entries.get(6).getTeamName(), is("Everton"));
+	public void testShowTeamWhichHasDrawMatches() {
+		List<LeagueTableEntry> drawnTeams = entries.stream().filter(t -> t.getDrawn() > 0).collect(Collectors.toList());
+		
+		assertThat(drawnTeams.get(0).getTeamName(), is("WestHam United F.C"));
+		assertThat(drawnTeams.get(1).getTeamName(), is("Everton"));
 	}
 
 	@Test
