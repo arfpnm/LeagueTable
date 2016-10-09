@@ -2,6 +2,8 @@ package com.pulselive.leaguetable.service;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import com.pulselive.leaguetable.domain.LeagueTableEntry;
@@ -15,12 +17,12 @@ public class LeagueTable
 	 * @param matches
 	 */
 	private LeagueTableEntry leagueTableEntry;
-	private final HashMap<String, LeagueTableEntry> leagueTableEntryMap;
+	private final Map<String, LeagueTableEntry> leagueTableEntryMap;
 	private final List<Match> matches;
 
 	public LeagueTable( final List<Match> matches )
 	{
-		leagueTableEntryMap = new HashMap<String, LeagueTableEntry>();
+		leagueTableEntryMap = new ConcurrentHashMap<String, LeagueTableEntry>();
 		this.matches = matches;
 	}
 

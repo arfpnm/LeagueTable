@@ -71,7 +71,10 @@ public class LeagueTableTest
 
 	@Test
 	public void testShowHighestPoints() {
-		assertEquals(entries.get(0).getPoints(), 2);
+		//
+		IntSummaryStatistics summaryStatistics = entries.stream()
+				.mapToInt(LeagueTableEntry::getPoints).summaryStatistics();
+		assertEquals(2, summaryStatistics.getMax());
 	}
 
 	@Test
