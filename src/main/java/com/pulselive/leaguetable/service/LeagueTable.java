@@ -1,6 +1,5 @@
 package com.pulselive.leaguetable.service;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,6 +41,11 @@ public class LeagueTable
 				thenComparing(LeagueTableEntry::getTeamName)).collect(Collectors.toList());			
 	}
 
+	/**
+	 * @param Match
+	 * @return LeagueTableEntry
+	 * Creating League Table for the Home Teams
+	 */
 	private LeagueTableEntry createLeagueForHomeTeams(Match match){
 		int homeTeamWin = 0;
 		int homeTeamDraw = 0;
@@ -79,7 +83,11 @@ public class LeagueTable
 		return  new LeagueTableEntry(match.getHomeTeam(), 
 				homeTeamTotalPlayed, homeTeamWin, homeTeamDraw, homeTeamLost, homeTeamGoalsFor, homeTeamGoalsAgainst, homeTeamGoalsDifference, homeTeamWin);
 	}
-	
+	/**
+	 * @param Match
+	 * @return LeagueTableEntry
+	 * Creating League Table for the Away Teams
+	 */
 	private LeagueTableEntry createLeagueForAwayTeams(Match match){
 		int awayTeamWin = 0;
 		int awayTeamDraw = 0;
